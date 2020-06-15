@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar title="Grauniad Reader" icon="far fa-newspaper" />
+        <Navbar />
         <div className="container">
           <Articles />
         </div>

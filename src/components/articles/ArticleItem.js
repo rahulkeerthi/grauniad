@@ -1,26 +1,18 @@
-/* eslint-disable react/prefer-stateless-function */
-/* eslint-disable max-len */
-/* eslint-disable react/no-unused-state */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class ArticleItem extends Component {
-  render() {
-    const {
-      article: { imageUrl, title, linkUrl, bodyPreview },
-    } = this.props;
-    return (
-      <div className="card text-center">
-        <img src={imageUrl} alt="" className="img" style={{ width: '240px' }} />
-        <h3 className="">{title}</h3>
-        <p>{bodyPreview}</p>
-        <a href={linkUrl} className="btn btn-dark btn-sm my-1">
-          Read More
-        </a>
-      </div>
-    );
-  }
-}
+const ArticleItem = ({ article: { imageUrl, title, linkUrl, bodyPreview } }) => {
+  return (
+    <div className="card text-center">
+      <img src={imageUrl} alt="" className="img" style={{ width: '240px' }} />
+      <h3 className="">{title}</h3>
+      <p>{bodyPreview}</p>
+      <a href={linkUrl} className="btn btn-dark btn-sm my-1">
+        Read More
+      </a>
+    </div>
+  );
+};
 
 ArticleItem.propTypes = {
   article: PropTypes.shape({

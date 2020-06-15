@@ -1,29 +1,26 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class Navbar extends Component {
-  render() {
-    const { icon, title } = this.props;
-    return (
-      <nav className="navbar bg-primary">
-        <h1>
-          <i className={icon} />
-          <span> </span>
-          {title}
-        </h1>
-      </nav>
-    );
-  }
-}
-
-Navbar.propTypes = {
-  title: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
+const Navbar = (props) => {
+  const { icon, title } = props;
+  return (
+    <nav className="navbar bg-primary">
+      <h1>
+        <i className={icon} />
+        <span> </span>
+        {title}
+      </h1>
+    </nav>
+  );
 };
 
-// Navbar.defaultProps = {
-//   title: 'Grauniad Reader',
-//   icon: 'far fa-newspaper',
-// };
+Navbar.propTypes = {
+  title: PropTypes.string,
+  icon: PropTypes.string,
+};
+
+Navbar.defaultProps = {
+  title: 'Grauniad Reader',
+  icon: 'far fa-newspaper',
+};
 export default Navbar;
