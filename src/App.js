@@ -1,6 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import Navbar from './components/layout/Navbar';
+import ArticleItem from './components/articles/ArticleItem';
 import './App.css';
 
 class App extends Component {
@@ -8,6 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar title="Grauniad Reader" icon="far fa-newspaper" />
+        <ArticleItem />
       </div>
     );
 

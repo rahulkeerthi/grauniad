@@ -2,13 +2,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export class Navbar extends Component {
+class Navbar extends Component {
   render() {
+    const { icon, title } = this.props;
     return (
       <nav className="navbar bg-primary">
         <h1>
-          <i className={this.props.icon} />
-          {this.props.title}
+          <i className={icon} />
+          <span> </span>
+          {title}
         </h1>
       </nav>
     );
