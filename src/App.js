@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import Navbar from './components/layout/Navbar';
 import './App.css';
