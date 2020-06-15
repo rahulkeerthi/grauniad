@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import Navbar from './components/layout/Navbar';
-import ArticleItem from './components/articles/ArticleItem';
+import Articles from './components/articles/Articles';
 import './App.css';
 
 class App extends Component {
@@ -9,16 +9,11 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar title="Grauniad Reader" icon="far fa-newspaper" />
-        <ArticleItem />
+        <div className="container">
+          <Articles />
+        </div>
       </div>
     );
-
-    // USING CREATE ELEMENT
-    // return React.createElement(
-    //   "div",
-    //   { className: "App" },
-    //   React.createElement("h1", null, "Hello from React!")
-    // );
   }
 }
 
