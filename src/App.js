@@ -12,7 +12,10 @@ import Search from './components/articles/Search';
 import Alert from './components/layout/Alert';
 import './App.css';
 
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
 let guardianApiKey;
+
 if (process.env.NODE_ENV !== 'production') {
   guardianApiKey = process.env.REACT_APP_GUARDIAN_API_KEY;
 } else {
