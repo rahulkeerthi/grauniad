@@ -1,11 +1,11 @@
-/* eslint-disable no-console */
 /* eslint-disable max-len */
-/* eslint-disable react/prefer-stateless-function */
-/* eslint no-console: ["error", {"allow" : ["error"] }] */
+// /* eslint-disable react/prefer-stateless-function */
 
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './components/layout/Navbar';
+import About from './components/pages/About';
 import Articles from './components/articles/Articles';
 import Search from './components/articles/Search';
 import Alert from './components/layout/Alert';
@@ -23,22 +23,23 @@ class App extends Component {
 
   async componentDidMount() {
     this.setState({ isLoading: true });
+    const { setAlert } = this;
     const response = await axios
       .get(
         `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${process.env.REACT_APP_GUARDIAN_API_KEY}`,
       )
-      .catch((err) => console.error(err));
+      .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
   }
 
   searchArticles = async (text) => {
     this.setState({ isLoading: true });
+    const { setAlert } = this;
     const response = await axios
       .get(
         `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${process.env.REACT_APP_GUARDIAN_API_KEY}`,
       )
-      .catch((err) => console.error(err));
-    // console.log(response.data.response.results);
+      .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
   };
 
@@ -62,20 +63,33 @@ class App extends Component {
     const { isLoading, articles, alert } = this.state;
     const { searchArticles, clearArticles, setAlert, clearAlert } = this;
     return (
-      <div className="App">
-        <Navbar />
-        <div className="container">
-          <Alert alert={alert} />
-          <Search
-            searchArticles={searchArticles}
-            clearArticles={clearArticles}
-            showClear={articles.length > 0}
-            setAlert={setAlert}
-            clearAlert={clearAlert}
-          />
-          <Articles isLoading={isLoading} articles={articles} />
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Alert alert={alert} />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <Search
+                      searchArticles={searchArticles}
+                      clearArticles={clearArticles}
+                      showClear={articles.length > 0}
+                      setAlert={setAlert}
+                      clearAlert={clearAlert}
+                    />
+                    <Articles isLoading={isLoading} articles={articles} />
+                  </>
+                )}
+              />
+              <Route exact path="/about" component={About} />
+            </Switch>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
