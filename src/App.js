@@ -13,7 +13,6 @@ import Alert from './components/layout/Alert';
 import './App.css';
 
 let guardianApiKey;
-
 if (process.env.NODE_ENV !== 'production') {
   guardianApiKey = process.env.REACT_APP_GUARDIAN_API_KEY;
 } else {
