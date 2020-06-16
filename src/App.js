@@ -16,7 +16,6 @@ class App extends Component {
     this.state = {
       articles: [],
       isLoading: false,
-      query: '',
     };
   }
 
