@@ -7,6 +7,7 @@ import axios from 'axios';
 import Navbar from './components/layout/Navbar';
 import About from './components/pages/About';
 import Articles from './components/articles/Articles';
+import Article from './components/articles/Article';
 import Search from './components/articles/Search';
 import Alert from './components/layout/Alert';
 import './App.css';
@@ -18,6 +19,7 @@ class App extends Component {
       articles: [],
       isLoading: false,
       alert: null,
+      article: { fields: {} },
     };
   }
 
@@ -37,10 +39,21 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${process.env.REACT_APP_GUARDIAN_API_KEY}`,
+        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${process.env.REACT_APP_GUARDIAN_API_KEY}`,
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
+  };
+
+  getArticle = async (id) => {
+    this.setState({ isLoading: true });
+    const { setAlert } = this;
+    const response = await axios
+      .get(
+        `https://content.guardianapis.com/${id}?api-key=${process.env.REACT_APP_GUARDIAN_API_KEY}&show-fields=headline,byline,body,wordcount,lastModified`,
+      )
+      .catch((err) => setAlert(err, 'warning'));
+    this.setState({ article: response.data.response.content, isLoading: false });
   };
 
   // clears articles on button click
@@ -49,19 +62,20 @@ class App extends Component {
     this.setState({ articles: [] });
   };
 
-  // creates alert based on user actions
+  // creates alert based on user actions, with a 5s timeout
   setAlert = (msg, type) => {
     this.setState({ alert: { msg, type } });
     setTimeout(() => this.setState({ alert: null }), 5000);
   };
 
+  // clear alerts
   clearAlert = () => {
     this.setState({ alert: null });
   };
 
   render() {
-    const { isLoading, articles, alert } = this.state;
-    const { searchArticles, clearArticles, setAlert, clearAlert } = this;
+    const { isLoading, articles, alert, article } = this.state;
+    const { searchArticles, clearArticles, setAlert, clearAlert, getArticle } = this;
     return (
       <Router>
         <div className="App">
@@ -86,6 +100,18 @@ class App extends Component {
                 )}
               />
               <Route exact path="/about" component={About} />
+              <Route
+                exact
+                path="/article/:id*"
+                render={(props) => (
+                  <Article
+                    {...props}
+                    getArticle={getArticle}
+                    article={article}
+                    isLoading={isLoading}
+                  />
+                )}
+              />
             </Switch>
           </div>
         </div>

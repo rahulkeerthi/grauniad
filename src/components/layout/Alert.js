@@ -14,7 +14,9 @@ const Alert = ({ alert }) => {
 };
 
 Alert.propTypes = {
-  alert: PropTypes.shape({ msg: PropTypes.string, type: PropTypes.string }).isRequired,
+  alert: PropTypes.shape({ msg: PropTypes.string, type: PropTypes.string }),
 };
+
+Alert.defaultProps = { alert: null };
 
 export default Alert;
