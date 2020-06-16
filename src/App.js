@@ -12,7 +12,11 @@ import Search from './components/articles/Search';
 import Alert from './components/layout/Alert';
 import './App.css';
 
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET',
+  'Access-Control-Request-Headers': 'Content-Type, application/x-www-form-urlencoded',
+};
 
 let guardianApiKey;
 
