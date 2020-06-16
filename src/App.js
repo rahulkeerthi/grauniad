@@ -12,11 +12,14 @@ import Search from './components/articles/Search';
 import Alert from './components/layout/Alert';
 import './App.css';
 
-axios.defaults.headers.common = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET',
-  'Access-Control-Request-Headers': 'Content-Type, application/x-www-form-urlencoded',
-};
+// axios.defaults.headers.common = {
+//   'Access-Control-Allow-Origin': '*',
+//   'Access-Control-Allow-Methods': 'GET',
+//   'Access-Control-Request-Headers': 'Content-Type, application/x-www-form-urlencoded',
+// };
+const instance = axios.create();
+instance.defaults.headers.common = {};
+instance.defaults.headers.common.accept = 'application/json';
 
 let guardianApiKey;
 
@@ -39,9 +42,11 @@ class App extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await axios
+
+    const response = await instance
       .get(
         `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
@@ -50,9 +55,10 @@ class App extends Component {
   searchArticles = async (text) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await axios
+    const response = await instance
       .get(
         `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
@@ -61,9 +67,10 @@ class App extends Component {
   getArticle = async (id) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await axios
+    const response = await instance
       .get(
         `https://content.guardianapis.com/${id}?api-key=${guardianApiKey}&show-fields=headline,byline,body,wordcount,lastModified`,
+        { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ article: response.data.response.content, isLoading: false });
