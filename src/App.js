@@ -17,10 +17,6 @@ import './App.css';
 //   'Access-Control-Allow-Methods': 'GET',
 //   'Access-Control-Request-Headers': 'Content-Type, application/x-www-form-urlencoded',
 // };
-const instance = axios.create();
-instance.defaults.headers.common = {};
-instance.defaults.headers.common.accept = 'application/json';
-
 let guardianApiKey;
 
 if (process.env.NODE_ENV !== 'production') {
@@ -28,6 +24,13 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   guardianApiKey = process.env.GUARDIAN_API_KEY;
 }
+const instance = axios.create();
+instance.defaults.headers.common = {};
+instance.defaults.headers.common.accept = 'application/json';
+instance.defaults.headers.common['api-key'] = guardianApiKey;
+instance.defaults.headers.common.cookie =
+  'AWSELB=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28; AWSELBCORS=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28';
+
 class App extends Component {
   constructor() {
     super();
@@ -45,7 +48,7 @@ class App extends Component {
 
     const response = await instance
       .get(
-        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -57,7 +60,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await instance
       .get(
-        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -69,7 +72,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await instance
       .get(
-        `https://content.guardianapis.com/${id}?api-key=${guardianApiKey}&show-fields=headline,byline,body,wordcount,lastModified`,
+        `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
