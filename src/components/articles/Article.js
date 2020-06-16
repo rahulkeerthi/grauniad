@@ -37,7 +37,7 @@ class Article extends Component {
     };
 
     const clean = DOMPurify.sanitize(`${body}`, config);
-    const readingMinutes = Math.round(Number(wordcount) / 200);
+    const readingMinutes = Math.round(Number(wordcount) / 200) || 'Unknown';
     const date = new Date(webPublicationDate);
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const showDate = date.toLocaleDateString('en-US', options);
