@@ -12,11 +12,6 @@ import Search from './components/articles/Search';
 import Alert from './components/layout/Alert';
 import './App.css';
 
-// axios.defaults.headers.common = {
-//   'Access-Control-Allow-Origin': '*',
-//   'Access-Control-Allow-Methods': 'GET',
-//   'Access-Control-Request-Headers': 'Content-Type, application/x-www-form-urlencoded',
-// };
 let guardianApiKey;
 
 if (process.env.NODE_ENV !== 'production') {
@@ -24,12 +19,6 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   guardianApiKey = process.env.GUARDIAN_API_KEY;
 }
-const instance = axios.create();
-instance.defaults.headers.common = {};
-instance.defaults.headers.common.accept = 'application/json';
-instance.defaults.headers.common['api-key'] = guardianApiKey;
-instance.defaults.headers.common.cookie =
-  'AWSELB=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28; AWSELBCORS=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28';
 
 class App extends Component {
   constructor() {
@@ -46,9 +35,9 @@ class App extends Component {
     this.setState({ isLoading: true });
     const { setAlert } = this;
 
-    const response = await instance
+    const response = await axios
       .get(
-        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football`,
+        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -58,9 +47,9 @@ class App extends Component {
   searchArticles = async (text) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await instance
+    const response = await axios
       .get(
-        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football`,
+        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -70,9 +59,9 @@ class App extends Component {
   getArticle = async (id) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await instance
+    const response = await axios
       .get(
-        `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified`,
+        `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -109,7 +98,7 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                render={(props) => (
+                render={() => (
                   <>
                     <Search
                       searchArticles={searchArticles}
