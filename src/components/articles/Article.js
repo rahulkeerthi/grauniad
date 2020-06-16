@@ -45,14 +45,17 @@ class Article extends Component {
     return (
       <div>
         <h2>
-          {pillarName} / {sectionName}
+          <span>
+            {pillarName}
+            <span> / </span>
+            {sectionName}
+          </span>
         </h2>
         <h1>{headline}</h1>
         <h4>{showDate}</h4>
-        <h3>
-          <span>{byline} </span>
-        </h3>
-        <span>{readingMinutes} min reading time</span>
+        <h3>{byline}</h3>
+        <span>{readingMinutes}</span>
+        <span> min reading time</span>
         <hr className="my-1" />
         <div className="article-content">{parse(clean)}</div>
       </div>
@@ -65,6 +68,7 @@ Article.propTypes = {
   getArticle: PropTypes.func.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }) }).isRequired,
   article: PropTypes.shape({
+    webPublicationDate: PropTypes.string,
     sectionName: PropTypes.string,
     pillarName: PropTypes.string,
     fields: PropTypes.shape({
