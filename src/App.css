@@ -417,3 +417,7 @@ table th {
     justify-content: center;
   }
 }
+
+.article-content p {
+  margin-bottom: 0.6rem;
+}

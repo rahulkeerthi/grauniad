@@ -14,6 +14,7 @@ class Article extends Component {
     const {
       isLoading,
       article: {
+        webPublicationDate,
         sectionName,
         pillarName,
         fields: { body, byline, headline, wordcount },
@@ -36,19 +37,24 @@ class Article extends Component {
     };
 
     const clean = DOMPurify.sanitize(`${body}`, config);
+    const readingMinutes = Math.round(Number(wordcount) / 200);
+    const date = new Date(webPublicationDate);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const showDate = date.toLocaleDateString('en-US', options);
 
     return (
       <div>
-        <h1>
+        <h2>
           {pillarName} / {sectionName}
-        </h1>
-        <h2>{headline}</h2>
+        </h2>
+        <h1>{headline}</h1>
+        <h4>{showDate}</h4>
         <h3>
-          {byline}
-          <span> - </span>
-          <span>{wordcount} words</span>
+          <span>{byline} </span>
         </h3>
-        <div>{parse(clean)}</div>
+        <span>{readingMinutes} min reading time</span>
+        <hr className="my-1" />
+        <div className="article-content">{parse(clean)}</div>
       </div>
     );
   }
