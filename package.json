@@ -56,6 +56,5 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "typescript": "^3.6.0-dev",
     "webpack": "^4.43.0"
-  },
-  "proxy": "https://kind-wilson-1fb857.netlify.app/"
+  }
 }

@@ -57,7 +57,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://content.guardianapis.com/${id}?api-key=${guardianApiKey}&show-fields=headline,byline,body,wordcount,lastModified`,
+        `https://content.guardianapis.com/${id}?api-key=${guardianApiKey}&show-fields=headline,byline,body,wordcount,lastModified`,
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ article: response.data.response.content, isLoading: false });
