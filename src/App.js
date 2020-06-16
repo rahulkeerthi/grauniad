@@ -35,7 +35,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://secret-ocean-49799.herokuapp.com/https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
@@ -46,7 +46,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://secret-ocean-49799.herokuapp.com/https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
@@ -57,7 +57,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://secret-ocean-49799.herokuapp.com/https://content.guardianapis.com/${id}?api-key=${guardianApiKey}&show-fields=headline,byline,body,wordcount,lastModified`,
+        `https://content.guardianapis.com/${id}?api-key=${guardianApiKey}&show-fields=headline,byline,body,wordcount,lastModified`,
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ article: response.data.response.content, isLoading: false });
