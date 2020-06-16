@@ -11,14 +11,20 @@ class Search extends Component {
 
   onSubmit = (e) => {
     const { text } = this.state;
-    const { searchArticles } = this.props;
+    const { searchArticles, setAlert } = this.props;
     e.preventDefault();
-    searchArticles(text);
+    if (text === '') {
+      setAlert('Please enter a search query', 'light');
+    } else {
+      searchArticles(text);
+    }
   };
 
   onChange = (e) => {
+    const { clearAlert } = this.props;
     // [e.target.name] allows dynamic assignment of state keys based on form name
     this.setState({ [e.target.name]: e.target.value });
+    clearAlert();
   };
 
   render() {
@@ -50,6 +56,8 @@ Search.propTypes = {
   searchArticles: PropTypes.func.isRequired,
   clearArticles: PropTypes.func.isRequired,
   showClear: PropTypes.bool.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  clearAlert: PropTypes.func.isRequired,
 };
 
 export default Search;

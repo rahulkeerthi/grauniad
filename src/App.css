@@ -23,6 +23,10 @@ body {
   color: #333;
 }
 
+.roboto {
+  font-family: 'Roboto', sans-serif;
+}
+
 a {
   color: var(--primary-color);
   text-decoration: none;
@@ -243,6 +247,7 @@ img {
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  transition: all 0.5s ease;
 }
 
 .btn-primary,

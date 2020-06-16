@@ -8,6 +8,7 @@ import axios from 'axios';
 import Navbar from './components/layout/Navbar';
 import Articles from './components/articles/Articles';
 import Search from './components/articles/Search';
+import Alert from './components/layout/Alert';
 import './App.css';
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
     this.state = {
       articles: [],
       isLoading: false,
+      alert: null,
     };
   }
 
@@ -40,22 +42,36 @@ class App extends Component {
     this.setState({ articles: response.data.response.results, isLoading: false });
   };
 
+  // clears articles on button click
   clearArticles = (e) => {
     e.preventDefault();
     this.setState({ articles: [] });
   };
 
+  // creates alert based on user actions
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type } });
+    setTimeout(() => this.setState({ alert: null }), 5000);
+  };
+
+  clearAlert = () => {
+    this.setState({ alert: null });
+  };
+
   render() {
-    const { isLoading, articles } = this.state;
-    const { searchArticles, clearArticles } = this;
+    const { isLoading, articles, alert } = this.state;
+    const { searchArticles, clearArticles, setAlert, clearAlert } = this;
     return (
       <div className="App">
         <Navbar />
         <div className="container">
+          <Alert alert={alert} />
           <Search
             searchArticles={searchArticles}
             clearArticles={clearArticles}
             showClear={articles.length > 0}
+            setAlert={setAlert}
+            clearAlert={clearAlert}
           />
           <Articles isLoading={isLoading} articles={articles} />
         </div>
