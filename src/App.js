@@ -19,7 +19,11 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   guardianApiKey = process.env.GUARDIAN_API_KEY;
 }
-
+axios.defaults.baseURL = 'https://content.guardianapis.com';
+axios.defaults.headers.common['Access-Control-Request-Method'] = 'GET';
+axios.defaults.headers.common.Connection = 'keep-alive';
+axios.defaults.headers.common.Origin = 'https://grauniad.netlify.app';
+axios.defaults.headers.common.Referer = 'https://grauniad.netlify.app/index.html';
 class App extends Component {
   constructor() {
     super();
@@ -37,7 +41,7 @@ class App extends Component {
 
     const response = await axios
       .get(
-        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -49,7 +53,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -61,7 +65,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}`,
+        `/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
