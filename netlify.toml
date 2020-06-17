@@ -14,4 +14,7 @@
   # Define which paths this specific [[headers]] block will cover.
   for = "/*"
     [headers.values]
-    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Origin = "https://grauniad.netlify.app/"
+    Access-Control-Allow-Methods = 'PUT, POST, GET'
+    Host = 'https://grauniad.netlify.app/'
+    Accept = 'application/json'
