@@ -2,29 +2,3 @@
   # command = "yarn build"
   publish="build"
 
-# The following redirect is intended for use with most SPAs that handle
-# routing internally.
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-  [redirects.headers]
-    Access-Control-Request-Method = "GET"
-    Access-Control-Allow-Origin = "*"
-    Cookie = "AWSELB=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28; AWSELBCORS=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28"     
-    Host = "http://content.guardianapis.com/"
-    Origin = "https://grauniad.netlify.app/"
-
-[[headers]]
-  # Define which paths this specific [[headers]] block will cover.
-  for = "/*"
-    [headers.values]
-    Access-Control-Request-Method = "GET"
-    Access-Control-Allow-Origin = "*"
-    Connection = "keep-alive"
-    Accept-Encoding = "gzip, deflate, br"
-    Host = "http://content.guardianapis.com/"
-    Origin = "https://grauniad.netlify.app/"
-    Cookie = "AWSELB=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28; AWSELBCORS=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28"
-    

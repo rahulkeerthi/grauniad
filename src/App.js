@@ -19,11 +19,11 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   guardianApiKey = process.env.GUARDIAN_API_KEY;
 }
+
 axios.defaults.baseURL = 'https://content.guardianapis.com';
-axios.defaults.headers.common['Access-Control-Request-Method'] = 'GET';
-axios.defaults.headers.common.Connection = 'keep-alive';
-axios.defaults.headers.common.Origin = 'https://grauniad.netlify.app';
-axios.defaults.headers.common.Referer = 'https://grauniad.netlify.app/index.html';
+axios.defaults.headers.common.Cookie =
+  'AWSELB=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28; AWSELBCORS=75B9BD811C5C032EDEF76366759629DCCB8726D7A30D93925AE6796CF81003C5E07EB78986E4519DDF3CD336789F71716B110728D8DE1BEBEA2066D91EF4E557583DFDBA28';
+
 class App extends Component {
   constructor() {
     super();
@@ -42,7 +42,6 @@ class App extends Component {
     const response = await axios
       .get(
         `/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
-        { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
@@ -54,7 +53,6 @@ class App extends Component {
     const response = await axios
       .get(
         `/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
-        { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
@@ -66,7 +64,6 @@ class App extends Component {
     const response = await axios
       .get(
         `/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}`,
-        { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ article: response.data.response.content, isLoading: false });
