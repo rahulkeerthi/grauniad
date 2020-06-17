@@ -37,7 +37,7 @@ class App extends Component {
 
     const response = await axios
       .get(
-        `http://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -49,7 +49,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `http://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
@@ -61,7 +61,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `http://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}`,
         { crossdomain: true },
       )
       .catch((err) => setAlert(err, 'warning'));
