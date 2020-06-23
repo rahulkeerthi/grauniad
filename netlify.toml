@@ -1,20 +1,4 @@
 [build]
+  # command = "yarn build"
   publish="build"
-  
-# The following redirect is intended for use with most SPAs that handle
-# routing internally.
-[[redirects]]
-  from = "/*"
-  to = "/index.html https://grauniad.netlify.app/:splat"
-  status = 200
 
-[[headers]]
-# Define which paths this specific [[headers]] block will cover.
-for = "/*"
-  [headers.values]
-  Access-Control-Allow-Origin = "*"
-  X-Frame-Options = "SAMEORIGIN"
-  Content-Security-Policy = [
-  "default-src 'self';",
-  "script-src 'self' 'unsafe-inline' https://grauniad.netlify.app;"
-  ]

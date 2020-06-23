@@ -8,8 +8,10 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "dompurify": "^2.0.11",
+    "guardian-js": "^3.0.0",
     "html-react-parser": "^0.13.0",
     "jsdom": "^16.2.2",
+    "jsonp": "^0.2.1",
     "netlify-cli": "^2.54.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -56,5 +58,6 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "typescript": "^3.6.0-dev",
     "webpack": "^4.43.0"
-  }
+  },
+  "proxy": "https://grauniad.netlify.app/"
 }

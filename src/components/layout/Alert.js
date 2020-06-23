@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Alert = ({ alert }) => {
+const Alert = ({ msg, type }) => {
   return (
     alert !== null && (
-      <div className={`alert alert-${alert.type}`}>
+      <div className={`alert alert-${type}`}>
         <i className="fas fa-info-circle">
-          <span className="roboto"> {alert.msg}</span>
+          <span className="roboto"> {msg}</span>
         </i>
       </div>
     )

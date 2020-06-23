@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 // /* eslint-disable react/prefer-stateless-function */
-
+import Guardian from 'guardian-js';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
@@ -19,6 +19,8 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   guardianApiKey = process.env.GUARDIAN_API_KEY;
 }
+const guardian = new Guardian(guardianApiKey, false);
+
 class App extends Component {
   constructor() {
     super();
@@ -30,14 +32,13 @@ class App extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await axios
-      .get(
-        `https://content.guardianapis.com/search?q=liverpool&page-size=20&&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
-      )
-      .catch((err) => setAlert(err, 'warning'));
+
+    const response = api.content.search(
+      `liverpool`, { page-size: 20, show-fields: { thumbnail,trailText }, section: football },
+    );
     this.setState({ articles: response.data.response.results, isLoading: false });
   }
 
@@ -55,11 +56,9 @@ class App extends Component {
   getArticle = async (id) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await axios
-      .get(
-        `https://content.guardianapis.com/${id}?api-key=${guardianApiKey}&show-fields=headline,byline,body,wordcount,lastModified`,
-      )
-      .catch((err) => setAlert(err, 'warning'));
+    const response = await jsonp(
+      `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}&format=json`,
+    );
     this.setState({ article: response.data.response.content, isLoading: false });
   };
 
@@ -93,7 +92,7 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                render={(props) => (
+                render={() => (
                   <>
                     <Search
                       searchArticles={searchArticles}
