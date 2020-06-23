@@ -46,7 +46,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://content.guardianapis.com/search?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
       )
       .catch((err) => setAlert(err, 'warning'));
     this.setState({ articles: response.data.response.results, isLoading: false });
