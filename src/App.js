@@ -39,7 +39,7 @@ class App extends Component {
 
     const response = await axios
       .get(
-        `https://content.guardianapis.com/search.json?q=liverpool&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=liverpool&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
       )
       .catch((err) => setAlert(err.message, 'light'));
     this.setState({ articles: response.data.response.results, isLoading: false });
@@ -50,7 +50,7 @@ class App extends Component {
     const { setAlert } = this;
     const response = await axios
       .get(
-        `https://content.guardianapis.com/search.json?q=${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+        `https://content.guardianapis.com/search?q=${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
       )
       .catch((err) => setAlert(err.message, 'light'));
     this.setState({ articles: response.data.response.results, isLoading: false });
