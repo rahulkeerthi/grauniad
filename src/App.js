@@ -75,7 +75,8 @@ class App extends Component {
 
   // creates alert based on user actions, with a 5s timeout
   setAlert = (msg, type) => {
-    this.setState({ alert: { msg, type } });
+    const alert = { msg, type };
+    this.setState({ alert });
     setTimeout(() => this.setState({ alert: null }), 5000);
   };
 
@@ -92,7 +93,7 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <div className="container">
-            <Alert alert={alert} />
+            {alert !== null ? <Alert alert={alert} /> : ''}
             <Switch>
               <Route
                 exact

@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Alert = ({ msg, type }) => {
+const Alert = ({ alert }) => {
+  const { msg, type } = alert;
   return (
     alert !== null && (
       <div className={`alert alert-${type}`}>
         <i className="fas fa-info-circle">
-          <span className="roboto"> {msg}</span>
+          <span> </span>
+          <span className="roboto">{msg}</span>
         </i>
       </div>
     )
@@ -14,9 +16,17 @@ const Alert = ({ msg, type }) => {
 };
 
 Alert.propTypes = {
-  alert: PropTypes.shape({ msg: PropTypes.string, type: PropTypes.string }),
+  alert: {
+    msg: PropTypes.string,
+    type: PropTypes.string,
+  },
 };
 
-Alert.defaultProps = { alert: null };
+Alert.defaultProps = {
+  alert: {
+    msg: '',
+    type: '',
+  },
+};
 
 export default Alert;
