@@ -32,12 +32,12 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ isLoading: true });
     const { setAlert } = this;
 
-    const response = api.content.search(
-      `liverpool`, { page-size: 20, show-fields: { thumbnail,trailText }, section: football },
+    const response = await axios.get(
+      `https://content.guardianapis.com/search.json?q=liverpool&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}&format=json`,
     );
     this.setState({ articles: response.data.response.results, isLoading: false });
   }
@@ -45,8 +45,8 @@ class App extends Component {
   searchArticles = async (text) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await jsonp(
-      `https://content.guardianapis.com/search.json?q=liverpool ${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}&format=json`,
+    const response = await axios.get(
+      `https://content.guardianapis.com/search.json?q=${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}&format=json`,
     );
     this.setState({ articles: response.data.response.results, isLoading: false });
   };
@@ -54,7 +54,7 @@ class App extends Component {
   getArticle = async (id) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await jsonp(
+    const response = await axios.get(
       `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}&format=json`,
     );
     this.setState({ article: response.data.response.content, isLoading: false });
