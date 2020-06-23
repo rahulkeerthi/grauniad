@@ -1,9 +1,7 @@
 /* eslint-disable max-len */
 // /* eslint-disable react/prefer-stateless-function */
-import Guardian from 'guardian-js';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
 import Navbar from './components/layout/Navbar';
 import About from './components/pages/About';
 import Articles from './components/articles/Articles';
@@ -12,6 +10,8 @@ import Search from './components/articles/Search';
 import Alert from './components/layout/Alert';
 import './App.css';
 
+const axios = require('axios').default;
+
 let guardianApiKey;
 
 if (process.env.NODE_ENV !== 'production') {
@@ -19,7 +19,8 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   guardianApiKey = process.env.GUARDIAN_API_KEY;
 }
-const guardian = new Guardian(guardianApiKey, false);
+
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 class App extends Component {
   constructor() {
@@ -36,27 +37,33 @@ class App extends Component {
     this.setState({ isLoading: true });
     const { setAlert } = this;
 
-    const response = await axios.get(
-      `https://content.guardianapis.com/search.json?q=liverpool&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}&format=json`,
-    );
+    const response = await axios
+      .get(
+        `https://content.guardianapis.com/search.json?q=liverpool&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+      )
+      .catch((err) => setAlert(err.message, 'light'));
     this.setState({ articles: response.data.response.results, isLoading: false });
   }
 
   searchArticles = async (text) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await axios.get(
-      `https://content.guardianapis.com/search.json?q=${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}&format=json`,
-    );
+    const response = await axios
+      .get(
+        `https://content.guardianapis.com/search.json?q=${text}&page-size=20&show-fields=thumbnail,trailText&section=football&api-key=${guardianApiKey}`,
+      )
+      .catch((err) => setAlert(err.message, 'light'));
     this.setState({ articles: response.data.response.results, isLoading: false });
   };
 
   getArticle = async (id) => {
     this.setState({ isLoading: true });
     const { setAlert } = this;
-    const response = await axios.get(
-      `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}&format=json`,
-    );
+    const response = await axios
+      .get(
+        `https://content.guardianapis.com/${id}?show-fields=headline,byline,body,wordcount,lastModified&api-key=${guardianApiKey}`,
+      )
+      .catch((err) => setAlert(err.message, 'light'));
     this.setState({ article: response.data.response.content, isLoading: false });
   };
 
